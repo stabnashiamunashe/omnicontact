@@ -1,0 +1,37 @@
+services:
+  mysql:
+    image: mysql:8.3
+    container_name: omni-mysql
+    environment:
+      MYSQL_DATABASE: riskdb
+      MYSQL_USER: riskuser
+      MYSQL_PASSWORD: riskpassword
+      MYSQL_ROOT_PASSWORD: rootpassword
+    ports:
+      - "3306:3306"
+    volumes:
+      - mysql_data:/var/lib/mysql
+    networks:
+      - risknet
+
+  app:
+    build: .
+    container_name: omni-app
+    depends_on:
+      - mysql
+    environment:
+      SPRING_DATASOURCE_URL: jdbc:mysql://mysql:3306/riskdb
+      SPRING_DATASOURCE_USERNAME: riskuser
+      SPRING_DATASOURCE_PASSWORD: riskpassword
+    ports:
+      - "80:8080"
+    networks:
+      - risknet
+
+volumes:
+  mysql_data:
+
+networks:
+  risknet:
+
+
