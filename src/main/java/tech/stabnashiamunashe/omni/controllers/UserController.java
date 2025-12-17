@@ -17,7 +17,7 @@ public class UserController {
 
     private final UserService userService;
 
-    @PostMapping()
+    @PostMapping("/")
     public ResponseEntity<?> createUser(@RequestBody CreateUserRequest createUserRequest){
         return new ResponseEntity<>(userService.createUser(createUserRequest), HttpStatus.CREATED);
     }
@@ -27,7 +27,7 @@ public class UserController {
         return new ResponseEntity<>(userService.createUsers(createUserRequests), HttpStatus.CREATED);
     }
 
-    @GetMapping()
+    @GetMapping("/")
     public ResponseEntity<List<User>> listUsers(){
         return new ResponseEntity<>(userService.getAllUsers(), HttpStatus.OK);
     }
